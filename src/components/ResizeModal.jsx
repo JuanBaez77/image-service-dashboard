@@ -180,48 +180,77 @@ const ResizeModal = ({ isOpen, image, onClose, onSubmit }) => {
                   </svg>
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Redimensionar imagen
-                  </h3>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Redimensionar "{getFilename(image)}" a las nuevas dimensiones especificadas.
-                    </p>
+                  <div className="flex items-center mb-3">
+                    <h3 className="text-xl font-bold text-gray-900">
+                      Redimensionar imagen
+                    </h3>
+                  </div>
+                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-3 mb-4">
+                    <div className="flex items-center">
+                      <svg className="h-5 w-5 text-purple-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <p className="text-sm text-gray-700 font-medium">
+                        Redimensionar <span className="text-purple-600 font-semibold">"{getFilename(image)}"</span> a las nuevas dimensiones especificadas.
+                      </p>
+                    </div>
                   </div>
                   
                   <div className="mt-4 space-y-4">
-                    <div>
-                      <label htmlFor="width" className="block text-sm font-medium text-gray-700">
-                        Ancho (px)
-                      </label>
-                      <input
-                        type="number"
-                        id="width"
-                        value={width}
-                        onChange={(e) => setWidth(e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-                        placeholder="Ej: 800"
-                        min="1"
-                        max="5000"
-                        disabled={isResizing || taskId}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="height" className="block text-sm font-medium text-gray-700">
-                        Alto (px)
-                      </label>
-                      <input
-                        type="number"
-                        id="height"
-                        value={height}
-                        onChange={(e) => setHeight(e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-                        placeholder="Ej: 600"
-                        min="1"
-                        max="5000"
-                        disabled={isResizing || taskId}
-                      />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="width" className="block text-sm font-medium text-gray-700 mb-2">
+                          <span className="flex items-center">
+                            <svg className="h-4 w-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                            </svg>
+                            Ancho (px)
+                          </span>
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="number"
+                            id="width"
+                            value={width}
+                            onChange={(e) => setWidth(e.target.value)}
+                            className="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-colors duration-200"
+                            placeholder="Ej: 800"
+                            min="1"
+                            max="5000"
+                            disabled={isResizing || taskId}
+                          />
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <span className="text-gray-500 text-sm">px</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="height" className="block text-sm font-medium text-gray-700 mb-2">
+                          <span className="flex items-center">
+                            <svg className="h-4 w-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                            </svg>
+                            Alto (px)
+                          </span>
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="number"
+                            id="height"
+                            value={height}
+                            onChange={(e) => setHeight(e.target.value)}
+                            className="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-colors duration-200"
+                            placeholder="Ej: 600"
+                            min="1"
+                            max="5000"
+                            disabled={isResizing || taskId}
+                          />
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <span className="text-gray-500 text-sm">px</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     
                     {/* Botón para restaurar dimensiones originales */}
@@ -234,58 +263,101 @@ const ResizeModal = ({ isOpen, image, onClose, onSubmit }) => {
                           setWidth(originalWidth.toString())
                           setHeight(originalHeight.toString())
                         }}
-                        className="text-sm text-purple-600 hover:text-purple-800 underline"
+                        className="inline-flex items-center px-3 py-2 text-sm font-medium text-purple-700 bg-purple-50 border border-purple-200 rounded-md hover:bg-purple-100 hover:border-purple-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200"
                         disabled={isResizing || taskId}
                       >
+                        <svg className="h-4 w-4 mr-2 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
                         Restaurar dimensiones originales
                       </button>
                     </div>
                   </div>
 
                   {error && (
-                    <div className="mt-4 bg-red-50 border border-red-200 rounded-md p-3">
-                      <p className="text-sm text-red-800">{error}</p>
+                    <div className="mt-4 bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-400 rounded-lg p-4 shadow-sm">
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0">
+                          <svg className="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div className="ml-3">
+                          <h3 className="text-sm font-medium text-red-800">
+                            Error en el redimensionamiento
+                          </h3>
+                          <div className="mt-2 text-sm text-red-700">
+                            <p>{error}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
 
                   {taskId && (
-                    <div className="mt-4 bg-blue-50 border border-blue-200 rounded-md p-3">
-                      <div className="flex items-center">
+                    <div className="mt-4 bg-gradient-to-r from-blue-50 to-indigo-100 border-l-4 border-blue-400 rounded-lg p-4 shadow-sm">
+                      <div className="flex items-start">
                         <div className="flex-shrink-0">
                           {taskStatus === 'processing' && (
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                            <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-400 border-t-transparent"></div>
                           )}
                           {taskStatus === 'completed' && (
-                            <svg className="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
+                            <div className="flex items-center justify-center h-5 w-5 rounded-full bg-green-100">
+                              <svg className="h-3 w-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                              </svg>
+                            </div>
                           )}
                           {taskStatus === 'failed' && (
-                            <svg className="h-4 w-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <div className="flex items-center justify-center h-5 w-5 rounded-full bg-red-100">
+                              <svg className="h-3 w-3 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </div>
                           )}
                           {taskStatus === 'timeout' && (
-                            <svg className="h-4 w-4 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            <div className="flex items-center justify-center h-5 w-5 rounded-full bg-yellow-100">
+                              <svg className="h-3 w-3 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            </div>
                           )}
                         </div>
                         <div className="ml-3 flex-1">
-                          <p className="text-sm text-blue-800">
-                            {taskStatus === 'processing' && 'Procesando redimensionamiento...'}
-                            {taskStatus === 'completed' && 'Redimensionamiento completado'}
-                            {taskStatus === 'failed' && 'Error en el redimensionamiento'}
-                            {taskStatus === 'timeout' && 'Tiempo de espera agotado'}
-                          </p>
-                          <p className="text-xs text-blue-600 mt-1">
-                            ID de tarea: {taskId}
-                          </p>
-                          {(taskStatus === 'completed' || taskStatus === 'failed' || taskStatus === 'timeout') && (
-                            <p className="text-xs text-blue-600 mt-1">
-                              Puedes cerrar este modal y verificar el resultado en la tabla.
-                            </p>
-                          )}
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-sm font-medium text-blue-800">
+                              {taskStatus === 'processing' && '🔄 Procesando redimensionamiento...'}
+                              {taskStatus === 'completed' && '✅ Redimensionamiento completado'}
+                              {taskStatus === 'failed' && '❌ Error en el redimensionamiento'}
+                              {taskStatus === 'timeout' && '⏰ Tiempo de espera agotado'}
+                            </h3>
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                              {taskStatus === 'processing' && 'En proceso'}
+                              {taskStatus === 'completed' && 'Completado'}
+                              {taskStatus === 'failed' && 'Fallido'}
+                              {taskStatus === 'timeout' && 'Timeout'}
+                            </span>
+                          </div>
+                          
+                          <div className="mt-2 space-y-2">
+                            <div className="flex items-center text-xs text-blue-600">
+                              <svg className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                              </svg>
+                              ID de tarea: <code className="ml-1 px-1.5 py-0.5 bg-blue-200 rounded text-blue-800 font-mono">{taskId}</code>
+                            </div>
+                            
+                            {(taskStatus === 'completed' || taskStatus === 'failed' || taskStatus === 'timeout') && (
+                              <div className="flex items-center text-xs text-blue-600 bg-blue-50 rounded-md p-2">
+                                <svg className="h-3 w-3 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                {taskStatus === 'completed' && 'Puedes cerrar este modal y verificar el resultado en la tabla.'}
+                                {taskStatus === 'failed' && 'El redimensionamiento no se pudo completar. Revisa los logs del servidor.'}
+                                {taskStatus === 'timeout' && 'El proceso está tomando más tiempo del esperado. Verifica el estado en el servidor.'}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -294,19 +366,24 @@ const ResizeModal = ({ isOpen, image, onClose, onSubmit }) => {
               </div>
             </div>
             
-            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 sm:flex sm:flex-row-reverse sm:px-6 border-t border-gray-200">
               <button
                 type="submit"
                 disabled={isResizing || taskId}
-                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full inline-flex justify-center items-center rounded-lg border border-transparent shadow-sm px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-base font-semibold text-white hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105"
               >
                 {isResizing ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
                     Procesando...
                   </>
                 ) : (
-                  'Redimensionar'
+                  <>
+                    <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    </svg>
+                    Redimensionar
+                  </>
                 )}
               </button>
               
@@ -314,8 +391,11 @@ const ResizeModal = ({ isOpen, image, onClose, onSubmit }) => {
                 type="button"
                 onClick={handleClose}
                 disabled={isResizing && !taskStatus}
-                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="mt-3 w-full inline-flex justify-center items-center rounded-lg border border-gray-300 shadow-sm px-6 py-3 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
               >
+                <svg className="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
                 Cancelar
               </button>
               
@@ -324,8 +404,11 @@ const ResizeModal = ({ isOpen, image, onClose, onSubmit }) => {
                 <button
                   type="button"
                   onClick={handleForceClose}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-red-300 shadow-sm px-4 py-2 bg-red-50 text-base font-medium text-red-700 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center items-center rounded-lg border border-red-300 shadow-sm px-6 py-3 bg-gradient-to-r from-red-50 to-red-100 text-base font-medium text-red-700 hover:from-red-100 hover:to-red-200 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-all duration-200"
                 >
+                  <svg className="h-5 w-5 mr-2 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                   Cerrar Modal
                 </button>
               )}
